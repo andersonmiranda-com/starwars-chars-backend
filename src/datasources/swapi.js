@@ -7,30 +7,55 @@ class SwapiAPI extends RESTDataSource {
   }
 
   // leaving this inside the class to make the class easier to test
-  peopleReducer(people) {
+  characterReducer(character) {
     return {
-      id: people.url.match(/(\d+)/)[0],
-      cursor: people.url.match(/(\d+)/)[0],
-      name: people.name,
-      height: people.height,
-      mass: people.mass,
-      gender: people.gender,
+      id: character.url.match(/(\d+)/)[0] || "",
+      name: character.name,
+      height: character.height,
+      mass: character.mass,
+      gender: character.gender,
+      hair_color: character.hair_color,
+      skin_color: character.skin_color,
+      eye_color: character.eye_color,
+      birth_year: character.birth_year,
+      films: character.films,
     };
   }
 
-  async getAllPeople() {
-    const { results } = await this.get("people");
+  async getAllCharacter({ page }) {
+    try {
+      const { results, previous, next } = await this.get(`people?page=${page}`);
 
-    // transform the raw launches to a more friendly
-    return Array.isArray(results)
-      ? results.map((item) => this.peopleReducer(item))
-      : [];
+      // transform the raw launches to a more friendly
+      const characters = Array.isArray(results)
+        ? results.map((item) => this.characterReducer(item))
+        : [];
+      return {
+        characters,
+        previous: previous ? previous.match(/(\d+)/)[0] : "", // extract page number from URL
+        next: next ? next.match(/(\d+)/)[0] : "",
+      };
+    } catch (err) {
+      throw err;
+    }
   }
 
-  async getPeopleById({ peopleId }) {
-    const res = await this.get(`people/${peopleId}`);
-    console.log(res.url.match(/(\d+)/)[0]);
-    return this.peopleReducer(res);
+  async getCharacterById({ characterId }) {
+    try {
+      const res = await this.get(`people/${characterId}`);
+
+      //get films' title
+      res.films = Array.isArray(res.films)
+        ? res.films.map(async (filmUrl) => {
+            const film = await this.get(filmUrl);
+            return film.title;
+          })
+        : [];
+
+      return this.characterReducer(res);
+    } catch (err) {
+      throw err;
+    }
   }
 }
 
