@@ -1,6 +1,6 @@
 const { RESTDataSource } = require("apollo-datasource-rest");
 
-class SwapiAPI extends RESTDataSource {
+export class SwapiAPI extends RESTDataSource {
   constructor() {
     super();
     this.baseURL = "https://swapi.dev/api/";
@@ -58,5 +58,3 @@ class SwapiAPI extends RESTDataSource {
     }
   }
 }
-
-module.exports = SwapiAPI;

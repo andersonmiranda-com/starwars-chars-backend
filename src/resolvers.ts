@@ -1,4 +1,4 @@
-const resolver = {
+export const resolvers = {
   Query: {
     charactersList: async (_, { page = 1 }, { dataSources }) => {
       if (page < 1) page = 1;
@@ -14,5 +14,3 @@ const resolver = {
       dataSources.SwapiAPI.getCharacterById({ characterId: id }),
   },
 };
-
-module.exports = resolver;

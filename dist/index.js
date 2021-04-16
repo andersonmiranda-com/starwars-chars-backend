@@ -1,34 +1,22 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-const { ApolloServer } = require("apollo-server");
-const typeDefs = require("./schema.graphql");
-const resolvers = require("./resolvers");
-const launch_1 = require("./datasources/launch");
+const apollo_server_1 = require("apollo-server");
+const resolvers_1 = require("./resolvers");
+const swapi_1 = require("./datasources/swapi");
+const schema_1 = require("./schema");
 // set up any dataSources our resolvers need
 const dataSources = () => ({
-    launchAPI: new launch_1.LaunchAPI(),
+    SwapiAPI: new swapi_1.SwapiAPI(),
 });
 // Set up Apollo Server
-const server = new ApolloServer({
-    typeDefs,
-    resolvers,
+const server = new apollo_server_1.ApolloServer({
+    typeDefs: schema_1.typeDefs,
+    resolvers: resolvers_1.resolvers,
     dataSources,
     introspection: true,
     playground: true,
-    //   engine: {
-    //     apiKey: process.env.ENGINE_API_KEY,
-    //     ...internalEngineDemo,
-    //   },
 });
-// Start our server if we're not in a test env.
-// if we're in a test env, we'll manually start it in a test
-if (process.env.NODE_ENV !== "test") {
-    server.listen().then(() => {
-        console.log(`
-      Server is running!
-      Listening on port 4000
-      Query at https://studio.apollographql.com/dev
-    `);
-    });
-}
+server.listen().then(() => {
+    console.log("Server is running on port 4000");
+});
 //# sourceMappingURL=index.js.map

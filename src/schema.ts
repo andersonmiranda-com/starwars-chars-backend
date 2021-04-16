@@ -1,6 +1,6 @@
-const { gql } = require('apollo-server');
+const { gql } = require("apollo-server");
 
-const typeDefs = gql`
+export const typeDefs = gql`
   type Query {
     charactersList(page: Int): CharacterConnection!
     character(id: ID!): Character
@@ -18,13 +18,10 @@ const typeDefs = gql`
     height: String
     mass: String
     gender: String
-    hair_color:  String
+    hair_color: String
     skin_color: String
     eye_color: String
-    birth_year:  String
+    birth_year: String
     films: [String]
   }
-  
 `;
-
-module.exports = typeDefs;
