@@ -18,5 +18,5 @@ const server = new ApolloServer({
 });
 
 server.listen().then(() => {
-  console.log("Server is running on port 4000");
+  console.log("GraphServer is running on port 4000");
 });

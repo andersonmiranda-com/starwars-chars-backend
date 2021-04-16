@@ -25,6 +25,7 @@ exports.typeDefs = gql `
     eye_color: String
     birth_year: String
     films: [String]
+    homeworld: String
   }
 `;
 //# sourceMappingURL=schema.js.map

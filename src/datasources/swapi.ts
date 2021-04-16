@@ -19,6 +19,7 @@ export class SwapiAPI extends RESTDataSource {
       eye_color: character.eye_color,
       birth_year: character.birth_year,
       films: character.films,
+      homeworld: character.homeworld,
     };
   }
 
@@ -42,15 +43,24 @@ export class SwapiAPI extends RESTDataSource {
 
   async getCharacterById({ characterId }) {
     try {
+      // get character
       const res = await this.get(`people/${characterId}`);
 
-      //get films' title
+      console.log(res);
+
+      //get film's title
       res.films = Array.isArray(res.films)
         ? res.films.map(async (filmUrl) => {
             const film = await this.get(filmUrl);
             return film.title;
           })
         : [];
+
+      //get homeworld
+      if (res.homeworld) {
+        const home = await this.get(res.homeworld);
+        res.homeworld = home.name;
+      }
 
       return this.characterReducer(res);
     } catch (err) {
