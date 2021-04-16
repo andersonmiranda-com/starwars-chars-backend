@@ -1,5 +1,3 @@
-const { paginateResults } = require("./utils");
-
 const resolver = {
   Query: {
     charactersList: async (_, { page = 1 }, { dataSources }) => {
