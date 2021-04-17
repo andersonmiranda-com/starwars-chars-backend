@@ -56,7 +56,6 @@ class SwapiAPI extends RESTDataSource {
             try {
                 // get character
                 const res = yield this.get(`people/${characterId}`);
-                console.log(res);
                 //get film's title
                 res.films = Array.isArray(res.films)
                     ? res.films.map((filmUrl) => __awaiter(this, void 0, void 0, function* () {
