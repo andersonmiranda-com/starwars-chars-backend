@@ -17,7 +17,7 @@ Open [http://localhost:4000/graphql](http://localhost:4000/graphql) to view it i
 
 ### Query examples
 
-Reads a paginated list of all chacaters for
+Reads a paginated list of all characters
 
 ```
   query charactersList($page: Int) {
